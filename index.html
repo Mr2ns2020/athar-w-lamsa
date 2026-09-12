@@ -10,28 +10,24 @@
 </head>
 <body>
 <div class="athar-banner"><img src="athar-header.jpg" alt="أثر ولمسة - كل منتج يحمل أثراً ويترك لمسة"></div>
-<iframe id="storeFrame" class="store" src="index-single-file.html" title="متجر أثر ولمسة"></iframe>
+<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-2" title="متجر أثر ولمسة"></iframe>
 <script>
 const frame=document.getElementById('storeFrame');
-frame.addEventListener('load',()=>{
+function applyProductImageFix(){
   try{
     const doc=frame.contentDocument||frame.contentWindow.document;
-    const style=doc.createElement('style');
+    if(!doc||!doc.head)return;
+    let style=doc.getElementById('athar-product-image-fix');
+    if(!style){style=doc.createElement('style');style.id='athar-product-image-fix';doc.head.appendChild(style)}
     style.textContent=`
-      .product-img,.pic{background:#f6f6f3!important;border-radius:16px!important;overflow:hidden!important;padding:14px!important;box-shadow:inset 0 0 0 1px #ebe7de!important}
-      .product-img img,.pic img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;filter:contrast(1.04) saturate(1.04) brightness(1.02)!important;image-rendering:auto!important;transition:transform .25s ease,filter .25s ease!important}
-      .product-card:hover .product-img img,.card:hover .pic img{transform:scale(1.035)!important;filter:contrast(1.06) saturate(1.06) brightness(1.03)!important}
-      .product-card,.card{border-radius:18px!important;box-shadow:0 10px 28px rgba(35,25,10,.08)!important;overflow:hidden!important}
-      .product-card:hover,.card:hover{box-shadow:0 18px 42px rgba(35,25,10,.15)!important}
-      .hero-img img{object-fit:contain!important;filter:contrast(1.03) saturate(1.03)!important}
-      @media(min-width:701px){.product-img,.pic{height:330px!important}}
-      @media(max-width:700px){.product-img,.pic{height:220px!important;padding:9px!important}}
+      .product-img,.pic{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#f4f2ec!important}
+      .product-img img,.pic img{display:block!important;width:92%!important;height:92%!important;max-width:92%!important;max-height:92%!important;object-fit:contain!important;object-position:50% 50%!important;margin:auto!important;filter:contrast(1.04) saturate(1.04) brightness(1.02)!important;transform:none!important}
+      .product-card:hover .product-img img,.card:hover .pic img{transform:scale(1.02)!important}
+      @media(max-width:700px){.product-img img,.pic img{width:94%!important;height:94%!important;max-width:94%!important;max-height:94%!important}}
     `;
-    doc.head.appendChild(style);
-    const imgs=doc.querySelectorAll('.product-img img,.pic img');
-    imgs.forEach(img=>{img.loading='lazy';img.decoding='async';});
-  }catch(e){console.warn('Product image enhancement skipped',e)}
-});
+  }catch(e){console.warn('Product image centering skipped',e)}
+}
+frame.addEventListener('load',()=>{applyProductImageFix();setTimeout(applyProductImageFix,250);setTimeout(applyProductImageFix,1000)});
 </script>
 </body>
 </html>
