@@ -10,24 +10,52 @@
 </head>
 <body>
 <div class="athar-banner"><img src="athar-header.jpg" alt="أثر ولمسة - كل منتج يحمل أثراً ويترك لمسة"></div>
-<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-2" title="متجر أثر ولمسة"></iframe>
+<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-3" title="متجر أثر ولمسة"></iframe>
 <script>
 const frame=document.getElementById('storeFrame');
-function applyProductImageFix(){
+function applyStoreFixes(){
   try{
     const doc=frame.contentDocument||frame.contentWindow.document;
     if(!doc||!doc.head)return;
-    let style=doc.getElementById('athar-product-image-fix');
-    if(!style){style=doc.createElement('style');style.id='athar-product-image-fix';doc.head.appendChild(style)}
+    let style=doc.getElementById('athar-store-fix');
+    if(!style){style=doc.createElement('style');style.id='athar-store-fix';doc.head.appendChild(style)}
     style.textContent=`
       .product-img,.pic{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#f4f2ec!important}
       .product-img img,.pic img{display:block!important;width:92%!important;height:92%!important;max-width:92%!important;max-height:92%!important;object-fit:contain!important;object-position:50% 50%!important;margin:auto!important;filter:contrast(1.04) saturate(1.04) brightness(1.02)!important;transform:none!important}
       .product-card:hover .product-img img,.card:hover .pic img{transform:scale(1.02)!important}
-      @media(max-width:700px){.product-img img,.pic img{width:94%!important;height:94%!important;max-width:94%!important;max-height:94%!important}}
+      .athar-contact-links{display:flex!important;gap:14px!important;align-items:center!important;flex-wrap:wrap!important}
+      .athar-contact-links a{color:#fff!important;text-decoration:none!important;font-weight:700!important}
+      .athar-contact-links a:hover{color:#d6a91e!important}
+      .athar-contact-box{display:flex!important;gap:12px!important;flex-wrap:wrap!important;margin-top:18px!important}
+      .athar-contact-box a{display:inline-block!important;padding:12px 18px!important;border-radius:8px!important;font-weight:800!important;text-decoration:none!important}
+      .athar-wa{background:#25D366!important;color:#fff!important}.athar-mail{background:#d6a91e!important;color:#111!important}
+      @media(max-width:700px){.product-img img,.pic img{width:94%!important;height:94%!important;max-width:94%!important;max-height:94%!important}.top{gap:8px!important;flex-wrap:wrap!important}.athar-contact-links{font-size:11px!important;gap:8px!important}}
     `;
-  }catch(e){console.warn('Product image centering skipped',e)}
+
+    const top=doc.querySelector('.top');
+    if(top){
+      let contact=top.querySelector('.athar-contact-links');
+      if(!contact){
+        const spans=top.querySelectorAll('span');
+        if(spans.length>1){spans[spans.length-1].remove();}
+        contact=doc.createElement('span');
+        contact.className='athar-contact-links';
+        top.appendChild(contact);
+      }
+      contact.innerHTML='<a href="https://wa.me/966551902949" target="_blank" rel="noopener">📱 واتساب: 055 190 2949</a><a href="mailto:atharlmssa@gmail.com">✉️ atharlmssa@gmail.com</a>';
+    }
+
+    const contactSection=doc.querySelector('#contact');
+    if(contactSection && !contactSection.querySelector('.athar-contact-box')){
+      const box=doc.createElement('div');
+      box.className='athar-contact-box';
+      box.innerHTML='<a class="athar-wa" href="https://wa.me/966551902949" target="_blank" rel="noopener">تواصل عبر واتساب</a><a class="athar-mail" href="mailto:atharlmssa@gmail.com">تواصل عبر البريد الإلكتروني</a>';
+      const target=contactSection.querySelector('.section-head')||contactSection;
+      target.appendChild(box);
+    }
+  }catch(e){console.warn('Store enhancements skipped',e)}
 }
-frame.addEventListener('load',()=>{applyProductImageFix();setTimeout(applyProductImageFix,250);setTimeout(applyProductImageFix,1000)});
+frame.addEventListener('load',()=>{applyStoreFixes();setTimeout(applyStoreFixes,250);setTimeout(applyStoreFixes,1000)});
 </script>
 </body>
 </html>
