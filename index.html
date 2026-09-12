@@ -5,80 +5,59 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>أثر ولمسة | للطباعة والتصميم والهدايا</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:#090908;width:100%;height:100%;font-family:Arial,sans-serif}.athar-banner{width:100%;background:#090908;line-height:0}.athar-banner img{display:block;width:100%;height:auto;max-height:720px;object-fit:cover;object-position:center}.store{display:block;width:100%;height:calc(100vh - min(50vw,720px));min-height:900px;border:0;background:#f7f3e9}@media(max-width:700px){.athar-banner img{min-height:240px;object-fit:cover;object-position:center}.store{height:1400px;min-height:1400px}}
+*{box-sizing:border-box}html,body{margin:0;padding:0;background:#090908;width:100%;height:100%;font-family:Arial,sans-serif}.athar-banner{width:100%;background:#090908;line-height:0}.athar-banner img{display:block;width:100%;height:auto;max-height:720px;object-fit:cover;object-position:center}.store{display:block;width:100%;height:calc(100vh - min(50vw,720px));min-height:1000px;border:0;background:#f7f3e9}@media(max-width:700px){.athar-banner img{min-height:240px;object-fit:cover;object-position:center}.store{height:1500px;min-height:1500px}}
 </style>
 </head>
 <body>
 <div class="athar-banner"><img src="athar-header.jpg" alt="أثر ولمسة - كل منتج يحمل أثراً ويترك لمسة"></div>
-<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-7" title="متجر أثر ولمسة"></iframe>
+<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-9" title="متجر أثر ولمسة"></iframe>
 <script>
 const frame=document.getElementById('storeFrame');
 const WA='966551902949';
-function svgData(type,bg,fg,accent,line1,line2=''){
- const common=`<svg xmlns="http://www.w3.org/2000/svg" width="700" height="700" viewBox="0 0 700 700"><rect width="700" height="700" fill="#f3f1eb"/><defs><filter id="s"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-opacity=".14"/></filter></defs>`;
- const text=`<g text-anchor="middle" font-family="Arial, sans-serif" font-weight="700"><text x="350" y="355" fill="${fg}" font-size="44">${line1}</text>${line2?`<text x="350" y="410" fill="${accent}" font-size="30">${line2}</text>`:''}</g>`;
- let shape='';
- if(type==='shirt')shape=`<g filter="url(#s)"><path d="M210 168l85-42h110l85 42 82 72-70 80-58-48v285H256V272l-58 48-70-80z" fill="${bg}"/><path d="M302 127c8 42 88 42 96 0" fill="none" stroke="#bbb" stroke-width="8"/></g>${text}`;
- if(type==='mug')shape=`<g filter="url(#s)"><rect x="185" y="180" rx="26" width="285" height="345" fill="${bg}"/><path d="M470 250c95-10 105 185 0 190" fill="none" stroke="${bg}" stroke-width="42"/></g>${text}`;
- if(type==='case')shape=`<g filter="url(#s)"><rect x="225" y="115" rx="54" width="250" height="470" fill="${bg}"/><circle cx="285" cy="175" r="27" fill="#222"/><circle cx="355" cy="175" r="27" fill="#222"/><circle cx="285" cy="245" r="27" fill="#222"/></g>${text}`;
- return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(common+shape+'</svg>');
+const GOLD='#d6a91e',BEIGE='#f3f0e8',BLACK='#111111';
+function esc(s){return String(s).replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[m]))}
+function svgProduct(p){
+ const base=`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900"><rect width="900" height="900" rx="36" fill="${BEIGE}"/><defs><filter id="ds" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity=".18"/></filter></defs>`;
+ let art='';
+ if(p.type==='shirt'){
+   const fill=p.dark?BLACK:'#ffffff',txt=p.dark?'#fff':'#111';
+   art=`<g filter="url(#ds)"><path d="M215 205 L320 145 Q360 125 400 130 L500 130 Q540 125 580 145 L685 205 L790 300 L695 400 L620 340 L620 735 Q620 775 580 775 L320 775 Q280 775 280 735 L280 340 L205 400 L110 300 Z" fill="${fill}"/><path d="M382 133 Q450 198 518 133" fill="none" stroke="#aaa" stroke-width="12" stroke-linecap="round"/></g>`;
+   if(p.icon==='mountain') art+=`<g transform="translate(0,-5)" text-anchor="middle"><circle cx="450" cy="355" r="58" fill="${GOLD}" opacity=".9"/><path d="M280 505 L390 355 L455 430 L530 315 L655 505 Z" fill="#f1f1f1"/><text x="450" y="590" font-family="Arial" font-weight="900" font-size="68" fill="${txt}">${esc(p.line1)}</text><text x="450" y="650" font-family="Arial" font-weight="700" font-size="34" fill="${GOLD}">${esc(p.line2)}</text></g>`;
+   else if(p.icon==='saudi') art+=`<g text-anchor="middle"><rect x="350" y="300" width="200" height="240" rx="8" fill="#ede4d5"/><path d="M382 475 C410 405 430 370 450 335 C475 382 502 410 520 475 Z" fill="#223f30"/><path d="M450 345 v115" stroke="#223f30" stroke-width="12"/><path d="M410 470 h80" stroke="${GOLD}" stroke-width="8"/><text x="450" y="610" font-family="Arial" font-weight="900" font-size="58" fill="${txt}">${esc(p.line1)}</text><text x="450" y="660" font-family="Arial" font-weight="700" font-size="30" fill="${GOLD}">${esc(p.line2)}</text></g>`;
+   else if(p.icon==='lion') art+=`<g text-anchor="middle"><circle cx="500" cy="420" r="120" fill="#242424"/><path d="M500 310 C445 335 430 395 445 465 C472 515 528 515 555 465 C570 395 555 335 500 310 Z" fill="#d8d8d8"/><text x="345" y="390" font-family="Arial" font-weight="900" font-size="40" fill="${txt}">قوة</text><text x="345" y="438" font-family="Arial" font-weight="900" font-size="40" fill="${GOLD}">صبر</text><text x="345" y="486" font-family="Arial" font-weight="900" font-size="40" fill="${txt}">تركيز</text><text x="450" y="625" font-family="Arial" font-weight="900" font-size="58" fill="${txt}">${esc(p.line1)}</text></g>`;
+   else art+=`<g text-anchor="middle"><text x="450" y="455" font-family="Arial" font-weight="900" font-size="70" fill="${txt}">${esc(p.line1)}</text><text x="450" y="525" font-family="Arial" font-weight="700" font-size="38" fill="${GOLD}">${esc(p.line2)}</text></g>`;
+ }
+ if(p.type==='mug'){
+   const fill=p.dark?BLACK:'#fff',txt=p.dark?'#fff':'#111';
+   art=`<g filter="url(#ds)"><rect x="205" y="180" width="390" height="520" rx="42" fill="${fill}"/><path d="M590 285 C775 255 800 610 590 595" fill="none" stroke="${fill}" stroke-width="70" stroke-linecap="round"/></g><g text-anchor="middle"><circle cx="400" cy="315" r="54" fill="${GOLD}" opacity=".85"/><path d="M270 500 L385 350 L450 430 L510 375 L590 500 Z" fill="${p.dark?'#e8e8e8':'#333'}"/><text x="400" y="570" font-family="Arial" font-weight="900" font-size="56" fill="${txt}">${esc(p.line1)}</text><text x="400" y="625" font-family="Arial" font-weight="700" font-size="34" fill="${GOLD}">${esc(p.line2)}</text></g>`;
+ }
+ if(p.type==='case'){
+   const fill=p.dark?BLACK:(p.bg||'#d8d0c0'),txt=p.dark?'#fff':'#111';
+   art=`<g filter="url(#ds)"><rect x="275" y="90" width="350" height="720" rx="76" fill="${fill}"/><circle cx="355" cy="185" r="45" fill="#151515"/><circle cx="465" cy="185" r="45" fill="#151515"/><circle cx="355" cy="295" r="45" fill="#151515"/></g><g text-anchor="middle"><path d="M315 630 L430 485 L495 560 L565 475 L620 630 Z" fill="${p.dark?'#444':'#333'}"/><circle cx="520" cy="485" r="50" fill="${GOLD}" opacity=".8"/><text x="450" y="430" font-family="Arial" font-weight="900" font-size="56" fill="${txt}">${esc(p.line1)}</text><text x="450" y="690" font-family="Arial" font-weight="700" font-size="34" fill="${GOLD}">${esc(p.line2)}</text></g>`;
+ }
+ return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(base+art+'</svg>');
 }
+const shirts=[
+ {name:'مستمر',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',dark:true,icon:'mountain',line1:'مستمر',line2:'لأن لدي هدف'},
+ {name:'نسخة أفضل',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',dark:false,line1:'نسخة أفضل',line2:'من نفسي كل يوم'},
+ {name:'روح السعودية',cat:'تصاميم سعودية',price:'89 ر.س',type:'shirt',dark:true,icon:'saudi',line1:'روح السعودية',line2:'SAUDI'},
+ {name:'قوة وإنجاز',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',dark:false,icon:'lion',line1:'قوة وإنجاز',line2:''},
+ {name:'الطريق يستحق',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',dark:true,line1:'الطريق يستحق',line2:'استمر'}
+];
+const mugs=[
+ {name:'كل يوم فرصة',cat:'أكواب تحفيزية',price:'السعر عند الطلب',type:'mug',dark:false,line1:'كل يوم فرصة',line2:'فرصة جديدة'},
+ {name:'عقل أهدأ',cat:'أكواب تحفيزية',price:'السعر عند الطلب',type:'mug',dark:true,line1:'عقل أهدأ',line2:'حياة أجمل'}
+];
+const cases=[
+ {name:'خطوة أقرب',cat:'كفرات جوال',price:'السعر عند الطلب',type:'case',dark:false,bg:'#e6dcc7',line1:'خطوة أقرب',line2:'إلى حلمك'},
+ {name:'سعودي وأفتخر',cat:'كفرات جوال',price:'السعر عند الطلب',type:'case',dark:true,line1:'سعودي وأفتخر',line2:'🇸🇦'},
+ {name:'الأشياء الجيدة',cat:'كفرات جوال',price:'السعر عند الطلب',type:'case',dark:false,bg:'#c7d0d2',line1:'الأشياء الجيدة',line2:'تحتاج وقتًا'}
+];
 function waLink(name){return `https://wa.me/${WA}?text=${encodeURIComponent('مرحباً أثر ولمسة، أرغب في طلب تصميم: '+name)}`}
-function newCard(p){
- const img=svgData(p.type,p.bg,p.fg,p.accent,p.line1,p.line2||'');
- return `<article class="product-card athar-new-card" data-cat="${p.cat}"><div class="product-img"><img src="${img}" alt="${p.name}"></div><h3>${p.name}</h3><p>${p.cat} • تصميم جديد</p><div class="price">${p.price}</div><a class="athar-order" href="${waLink(p.name)}" target="_blank" rel="noopener">اطلب عبر واتساب 💬</a></article>`;
-}
-function addNewProducts(doc){
- if(doc.getElementById('athar-new-products-added'))return;
- const marker=doc.createElement('div'); marker.id='athar-new-products-added'; marker.style.display='none'; doc.body.appendChild(marker);
- const shirts=[
-  {name:'مستمر',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',bg:'#111',fg:'#fff',accent:'#d6a91e',line1:'مستمر',line2:'لأن لدي هدف'},
-  {name:'نسخة أفضل',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',bg:'#fff',fg:'#111',accent:'#b48613',line1:'نسخة أفضل',line2:'من نفسي كل يوم'},
-  {name:'قوة وإنجاز',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',bg:'#f5f5f3',fg:'#111',accent:'#c49218',line1:'قوة • صبر • تركيز',line2:'إنجاز'},
-  {name:'الطريق يستحق',cat:'عبارات تحفيزية',price:'89 ر.س',type:'shirt',bg:'#111',fg:'#fff',accent:'#d6a91e',line1:'الطريق يستحق',line2:'استمر'},
-  {name:'روح السعودية',cat:'تصاميم سعودية',price:'89 ر.س',type:'shirt',bg:'#111',fg:'#fff',accent:'#d6a91e',line1:'روح السعودية',line2:'SAUDI'}
- ];
- const mugs=[
-  {name:'كل يوم فرصة',cat:'أكواب تحفيزية',price:'السعر عند الطلب',type:'mug',bg:'#fff',fg:'#111',accent:'#b48613',line1:'كل يوم',line2:'فرصة جديدة'},
-  {name:'عقل أهدأ',cat:'أكواب تحفيزية',price:'السعر عند الطلب',type:'mug',bg:'#111',fg:'#fff',accent:'#d6a91e',line1:'عقل أهدأ',line2:'حياة أجمل'}
- ];
- const cases=[
-  {name:'خطوة أقرب',cat:'كفرات جوال',price:'السعر عند الطلب',type:'case',bg:'#e9dfca',fg:'#111',accent:'#a8790d',line1:'خطوة أقرب',line2:'إلى حلمك'},
-  {name:'سعودي وأفتخر',cat:'كفرات جوال',price:'السعر عند الطلب',type:'case',bg:'#111',fg:'#fff',accent:'#d6a91e',line1:'سعودي وأفتخر',line2:'🇸🇦'},
-  {name:'الأشياء الجيدة',cat:'كفرات جوال',price:'السعر عند الطلب',type:'case',bg:'#cbd3d4',fg:'#111',accent:'#765a18',line1:'الأشياء الجيدة',line2:'تحتاج وقتًا'}
- ];
- const shirtGrid=doc.querySelector('#products .grid')||doc.querySelector('#products');
- const mugGrid=doc.querySelector('#mugs .grid')||doc.querySelector('#mugs');
- const otherGrid=doc.querySelector('#other-products .grid')||doc.querySelector('#other-products');
- if(shirtGrid) shirtGrid.insertAdjacentHTML('afterbegin',shirts.map(newCard).join(''));
- if(mugGrid) mugGrid.insertAdjacentHTML('afterbegin',mugs.map(newCard).join(''));
- if(otherGrid) otherGrid.insertAdjacentHTML('afterbegin',cases.map(newCard).join(''));
-}
-function applyStoreFixes(){
- try{
-  const doc=frame.contentDocument||frame.contentWindow.document;if(!doc||!doc.head||!doc.body)return;
-  let style=doc.getElementById('athar-store-fix');if(!style){style=doc.createElement('style');style.id='athar-store-fix';doc.head.appendChild(style)}
-  style.textContent=`
-  .product-img,.pic{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#f4f2ec!important;position:relative!important}
-  .product-img img,.pic img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;margin:0!important}
-  .athar-new-card{border:1px solid #e5dccd!important;border-radius:16px!important;box-shadow:0 10px 26px rgba(0,0,0,.08)!important;overflow:hidden!important}
-  .athar-new-card .product-img{padding:10px!important;background:#f5f2eb!important}
-  .athar-new-card .product-img img{transform:none!important;object-fit:contain!important;border-radius:10px!important;filter:none!important}
-  .athar-new-card:hover .product-img img{transform:scale(1.02)!important}
-  .athar-new-card h3{font-weight:900!important}.athar-new-card .price{font-weight:900!important;color:#8b6811!important}
-  .athar-order{display:block!important;width:100%!important;background:#151311!important;color:#fff!important;text-align:center!important;padding:12px!important;border-radius:8px!important;font-weight:900!important;text-decoration:none!important;margin-top:8px!important}
-  .athar-order:hover{background:#d6a91e!important;color:#111!important}
-  .athar-contact-strip{position:sticky!important;top:0!important;z-index:9999!important;background:#0d0c0b!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;flex-wrap:wrap!important;padding:10px 14px!important;border-bottom:1px solid #3d321d!important}
-  .athar-contact-strip a{color:#fff!important;text-decoration:none!important;font-weight:800!important}.athar-contact-strip a:hover{color:#d6a91e!important}
-  .athar-contact-floating{position:fixed!important;right:18px!important;bottom:18px!important;z-index:99999!important;display:flex!important;flex-direction:column!important;gap:10px!important}.athar-contact-floating a{display:flex!important;align-items:center!important;justify-content:center!important;padding:12px 16px!important;border-radius:28px!important;text-decoration:none!important;font-weight:900!important;box-shadow:0 8px 24px rgba(0,0,0,.22)!important}.athar-wa{background:#25D366!important;color:#fff!important}.athar-mail{background:#d6a91e!important;color:#111!important}
-  @media(max-width:700px){.athar-contact-strip{gap:10px!important;font-size:11px!important}.athar-contact-floating{right:10px!important;bottom:10px!important}.athar-contact-floating a{padding:10px 12px!important;font-size:12px!important}}
-  `;
-  addNewProducts(doc);
-  let strip=doc.querySelector('.athar-contact-strip');if(!strip){strip=doc.createElement('div');strip.className='athar-contact-strip';strip.innerHTML='<a href="https://wa.me/966551902949" target="_blank">📱 واتساب: 055 190 2949</a><a href="mailto:atharlmssa@gmail.com">✉️ atharlmssa@gmail.com</a>';doc.body.insertBefore(strip,doc.body.firstChild)}
-  let floating=doc.querySelector('.athar-contact-floating');if(!floating){floating=doc.createElement('div');floating.className='athar-contact-floating';floating.innerHTML='<a class="athar-wa" href="https://wa.me/966551902949" target="_blank">💬 واتساب</a><a class="athar-mail" href="mailto:atharlmssa@gmail.com">✉️ البريد الإلكتروني</a>';doc.body.appendChild(floating)}
- }catch(e){console.warn(e)}
-}
-frame.addEventListener('load',()=>{applyStoreFixes();setTimeout(applyStoreFixes,300);setTimeout(applyStoreFixes,1000)});
+function card(p){return `<article class="product-card athar-approved-card"><div class="product-img athar-approved-img"><img src="${svgProduct(p)}" alt="${esc(p.name)}"></div><h3>${esc(p.name)}</h3><p>${esc(p.cat)} • تصميم معتمد</p><div class="price">${esc(p.price)}</div><a class="athar-order" href="${waLink(p.name)}" target="_blank" rel="noopener">اطلب عبر واتساب 💬</a></article>`}
+function inject(doc){if(doc.getElementById('athar-approved-products'))return;const m=doc.createElement('i');m.id='athar-approved-products';m.hidden=true;doc.body.appendChild(m);const sg=doc.querySelector('#products .grid')||doc.querySelector('#products');const mg=doc.querySelector('#mugs .grid')||doc.querySelector('#mugs');const og=doc.querySelector('#other-products .grid')||doc.querySelector('#other-products');if(sg)sg.insertAdjacentHTML('afterbegin',shirts.map(card).join(''));if(mg)mg.insertAdjacentHTML('afterbegin',mugs.map(card).join(''));if(og)og.insertAdjacentHTML('afterbegin',cases.map(card).join(''))}
+function apply(){try{const doc=frame.contentDocument||frame.contentWindow.document;if(!doc||!doc.head||!doc.body)return;let st=doc.getElementById('athar-approved-style');if(!st){st=doc.createElement('style');st.id='athar-approved-style';doc.head.appendChild(st)}st.textContent=`.athar-approved-card{background:#fff!important;border:1px solid #e8dfd2!important;border-radius:18px!important;box-shadow:0 12px 32px rgba(0,0,0,.08)!important;overflow:hidden!important}.athar-approved-card .athar-approved-img{height:320px!important;background:#f3f0e8!important;padding:5px!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important}.athar-approved-card .athar-approved-img img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;transform:none!important;filter:none!important;margin:0!important;border-radius:12px!important}.athar-approved-card:hover .athar-approved-img img{transform:scale(1.015)!important}.athar-approved-card h3{font-weight:900!important;margin-top:14px!important}.athar-approved-card p{color:#9b8e79!important}.athar-approved-card .price{font-weight:900!important;color:#8b6811!important}.athar-order{display:block!important;width:100%!important;background:#151311!important;color:#fff!important;text-align:center!important;padding:13px 10px!important;border-radius:8px!important;font-weight:900!important;text-decoration:none!important;margin-top:10px!important}.athar-order:hover{background:#d6a91e!important;color:#111!important}.athar-contact-strip{position:sticky!important;top:0!important;z-index:9999!important;background:#0d0c0b!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;flex-wrap:wrap!important;padding:10px 14px!important;border-bottom:1px solid #3d321d!important}.athar-contact-strip a{color:#fff!important;text-decoration:none!important;font-weight:800!important}.athar-contact-strip a:hover{color:#d6a91e!important}.athar-contact-floating{position:fixed!important;right:18px!important;bottom:18px!important;z-index:99999!important;display:flex!important;flex-direction:column!important;gap:10px!important}.athar-contact-floating a{display:flex!important;align-items:center!important;justify-content:center!important;padding:12px 16px!important;border-radius:28px!important;text-decoration:none!important;font-weight:900!important;box-shadow:0 8px 24px rgba(0,0,0,.22)!important}.athar-wa{background:#25D366!important;color:#fff!important}.athar-mail{background:#d6a91e!important;color:#111!important}@media(max-width:700px){.athar-approved-card .athar-approved-img{height:250px!important}.athar-contact-strip{gap:10px!important;font-size:11px!important}.athar-contact-floating{right:10px!important;bottom:10px!important}.athar-contact-floating a{padding:10px 12px!important;font-size:12px!important}}`;inject(doc);let strip=doc.querySelector('.athar-contact-strip');if(!strip){strip=doc.createElement('div');strip.className='athar-contact-strip';strip.innerHTML='<a href="https://wa.me/966551902949" target="_blank">📱 واتساب: 055 190 2949</a><a href="mailto:atharlmssa@gmail.com">✉️ atharlmssa@gmail.com</a>';doc.body.insertBefore(strip,doc.body.firstChild)}let fl=doc.querySelector('.athar-contact-floating');if(!fl){fl=doc.createElement('div');fl.className='athar-contact-floating';fl.innerHTML='<a class="athar-wa" href="https://wa.me/966551902949" target="_blank">💬 واتساب</a><a class="athar-mail" href="mailto:atharlmssa@gmail.com">✉️ البريد الإلكتروني</a>';doc.body.appendChild(fl)}}catch(e){console.warn(e)}}
+frame.addEventListener('load',()=>{apply();setTimeout(apply,350);setTimeout(apply,1000)});
 </script>
 </body>
 </html>
