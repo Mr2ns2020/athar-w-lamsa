@@ -10,39 +10,45 @@
 </head>
 <body>
 <div class="athar-banner"><img src="athar-header.jpg" alt="أثر ولمسة - كل منتج يحمل أثراً ويترك لمسة"></div>
-<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-3" title="متجر أثر ولمسة"></iframe>
+<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-4" title="متجر أثر ولمسة"></iframe>
 <script>
 const frame=document.getElementById('storeFrame');
 function applyStoreFixes(){
   try{
     const doc=frame.contentDocument||frame.contentWindow.document;
-    if(!doc||!doc.head)return;
+    if(!doc||!doc.head||!doc.body)return;
+
     let style=doc.getElementById('athar-store-fix');
     if(!style){style=doc.createElement('style');style.id='athar-store-fix';doc.head.appendChild(style)}
     style.textContent=`
       .product-img,.pic{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#f4f2ec!important}
       .product-img img,.pic img{display:block!important;width:92%!important;height:92%!important;max-width:92%!important;max-height:92%!important;object-fit:contain!important;object-position:50% 50%!important;margin:auto!important;filter:contrast(1.04) saturate(1.04) brightness(1.02)!important;transform:none!important}
       .product-card:hover .product-img img,.card:hover .pic img{transform:scale(1.02)!important}
-      .athar-contact-links{display:flex!important;gap:14px!important;align-items:center!important;flex-wrap:wrap!important}
-      .athar-contact-links a{color:#fff!important;text-decoration:none!important;font-weight:700!important}
-      .athar-contact-links a:hover{color:#d6a91e!important}
+      .athar-contact-strip{position:sticky!important;top:0!important;z-index:9999!important;background:#0d0c0b!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;flex-wrap:wrap!important;padding:10px 14px!important;border-bottom:1px solid #3d321d!important;font-family:Cairo,Arial,sans-serif!important}
+      .athar-contact-strip a{color:#fff!important;text-decoration:none!important;font-weight:800!important;font-size:14px!important}
+      .athar-contact-strip a:hover{color:#d6a91e!important}
+      .athar-contact-floating{position:fixed!important;right:18px!important;bottom:18px!important;z-index:99999!important;display:flex!important;flex-direction:column!important;gap:10px!important}
+      .athar-contact-floating a{display:flex!important;align-items:center!important;justify-content:center!important;min-width:165px!important;padding:12px 16px!important;border-radius:28px!important;text-decoration:none!important;font-weight:900!important;box-shadow:0 8px 24px rgba(0,0,0,.22)!important}
+      .athar-wa{background:#25D366!important;color:#fff!important}.athar-mail{background:#d6a91e!important;color:#111!important}
       .athar-contact-box{display:flex!important;gap:12px!important;flex-wrap:wrap!important;margin-top:18px!important}
       .athar-contact-box a{display:inline-block!important;padding:12px 18px!important;border-radius:8px!important;font-weight:800!important;text-decoration:none!important}
-      .athar-wa{background:#25D366!important;color:#fff!important}.athar-mail{background:#d6a91e!important;color:#111!important}
-      @media(max-width:700px){.product-img img,.pic img{width:94%!important;height:94%!important;max-width:94%!important;max-height:94%!important}.top{gap:8px!important;flex-wrap:wrap!important}.athar-contact-links{font-size:11px!important;gap:8px!important}}
+      @media(max-width:700px){.product-img img,.pic img{width:94%!important;height:94%!important;max-width:94%!important;max-height:94%!important}.athar-contact-strip{gap:10px!important;padding:8px!important}.athar-contact-strip a{font-size:11px!important}.athar-contact-floating{right:10px!important;bottom:10px!important}.athar-contact-floating a{min-width:0!important;padding:11px 14px!important;font-size:12px!important}}
     `;
 
-    const top=doc.querySelector('.top');
-    if(top){
-      let contact=top.querySelector('.athar-contact-links');
-      if(!contact){
-        const spans=top.querySelectorAll('span');
-        if(spans.length>1){spans[spans.length-1].remove();}
-        contact=doc.createElement('span');
-        contact.className='athar-contact-links';
-        top.appendChild(contact);
-      }
-      contact.innerHTML='<a href="https://wa.me/966551902949" target="_blank" rel="noopener">📱 واتساب: 055 190 2949</a><a href="mailto:atharlmssa@gmail.com">✉️ atharlmssa@gmail.com</a>';
+    let strip=doc.querySelector('.athar-contact-strip');
+    if(!strip){
+      strip=doc.createElement('div');
+      strip.className='athar-contact-strip';
+      strip.innerHTML='<a href="https://wa.me/966551902949" target="_blank" rel="noopener">📱 واتساب: 055 190 2949</a><a href="mailto:atharlmssa@gmail.com">✉️ atharlmssa@gmail.com</a>';
+      doc.body.insertBefore(strip,doc.body.firstChild);
+    }
+
+    let floating=doc.querySelector('.athar-contact-floating');
+    if(!floating){
+      floating=doc.createElement('div');
+      floating.className='athar-contact-floating';
+      floating.innerHTML='<a class="athar-wa" href="https://wa.me/966551902949" target="_blank" rel="noopener">💬 واتساب</a><a class="athar-mail" href="mailto:atharlmssa@gmail.com">✉️ البريد الإلكتروني</a>';
+      doc.body.appendChild(floating);
     }
 
     const contactSection=doc.querySelector('#contact');
