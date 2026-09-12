@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="athar-banner"><img src="athar-header.jpg" alt="أثر ولمسة - كل منتج يحمل أثراً ويترك لمسة"></div>
-<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-5" title="متجر أثر ولمسة"></iframe>
+<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-6" title="متجر أثر ولمسة"></iframe>
 <script>
 const frame=document.getElementById('storeFrame');
 function applyStoreFixes(){
@@ -21,9 +21,9 @@ function applyStoreFixes(){
     let style=doc.getElementById('athar-store-fix');
     if(!style){style=doc.createElement('style');style.id='athar-store-fix';doc.head.appendChild(style)}
     style.textContent=`
-      .product-img,.pic{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#f4f2ec!important;padding:10px!important}
-      .product-img img,.pic img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:cover!important;object-position:center center!important;margin:0!important;filter:contrast(1.04) saturate(1.04) brightness(1.02)!important;transform:none!important;border-radius:8px!important}
-      .product-card:hover .product-img img,.card:hover .pic img{transform:scale(1.01)!important}
+      .product-img,.pic{display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;background:#f4f2ec!important;padding:0!important;position:relative!important}
+      .product-img img,.pic img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;object-fit:cover!important;object-position:var(--shirt-pos,50% 50%)!important;margin:0!important;filter:contrast(1.04) saturate(1.04) brightness(1.02)!important;transform:scale(1.34)!important;transform-origin:center center!important;border-radius:0!important}
+      .product-card:hover .product-img img,.card:hover .pic img{transform:scale(1.36)!important}
       .athar-contact-strip{position:sticky!important;top:0!important;z-index:9999!important;background:#0d0c0b!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;flex-wrap:wrap!important;padding:10px 14px!important;border-bottom:1px solid #3d321d!important;font-family:Cairo,Arial,sans-serif!important}
       .athar-contact-strip a{color:#fff!important;text-decoration:none!important;font-weight:800!important;font-size:14px!important}
       .athar-contact-strip a:hover{color:#d6a91e!important}
@@ -32,8 +32,22 @@ function applyStoreFixes(){
       .athar-wa{background:#25D366!important;color:#fff!important}.athar-mail{background:#d6a91e!important;color:#111!important}
       .athar-contact-box{display:flex!important;gap:12px!important;flex-wrap:wrap!important;margin-top:18px!important}
       .athar-contact-box a{display:inline-block!important;padding:12px 18px!important;border-radius:8px!important;font-weight:800!important;text-decoration:none!important}
-      @media(max-width:700px){.product-img,.pic{padding:7px!important}.athar-contact-strip{gap:10px!important;padding:8px!important}.athar-contact-strip a{font-size:11px!important}.athar-contact-floating{right:10px!important;bottom:10px!important}.athar-contact-floating a{min-width:0!important;padding:11px 14px!important;font-size:12px!important}}
+      @media(max-width:700px){.product-img img,.pic img{transform:scale(1.38)!important}.athar-contact-strip{gap:10px!important;padding:8px!important}.athar-contact-strip a{font-size:11px!important}.athar-contact-floating{right:10px!important;bottom:10px!important}.athar-contact-floating a{min-width:0!important;padding:11px 14px!important;font-size:12px!important}}
     `;
+
+    const positionByTitle={
+      'تصميم السعودية':'45% 50%',
+      'تصميم سعودي':'45% 50%',
+      'النخلة والسيف':'42% 50%',
+      'قوة بداخلك':'27% 50%',
+      'الأسد':'55% 50%',
+      'الأسد الملكي':'55% 50%'
+    };
+    doc.querySelectorAll('.product-card,.card').forEach(card=>{
+      const title=(card.querySelector('h3')?.textContent||'').trim();
+      const img=card.querySelector('.product-img img,.pic img');
+      if(img){img.style.setProperty('--shirt-pos',positionByTitle[title]||'50% 50%');}
+    });
 
     let strip=doc.querySelector('.athar-contact-strip');
     if(!strip){
