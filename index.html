@@ -1,71 +1,73 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>أثر ولمسة | للطباعة والتصميم والهدايا</title>
-<style>
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:#090908;width:100%;height:100%;font-family:Arial,sans-serif}.athar-banner{width:100%;background:#090908;line-height:0}.athar-banner img{display:block;width:100%;height:auto;max-height:720px;object-fit:cover;object-position:center}.store{display:block;width:100%;height:calc(100vh - min(50vw,720px));min-height:1100px;border:0;background:#f7f3e9}@media(max-width:700px){.athar-banner img{min-height:240px;object-fit:cover;object-position:center}.store{height:1600px;min-height:1600px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0b">
+  <meta name="description" content="أثر ولمسة للطباعة الراقية والهدايا المخصصة في جدة. تيشيرتات وأكواب وكفرات وطباعة ثلاثية الأبعاد بتصميمك.">
+  <meta property="og:title" content="أثر ولمسة | هدايا وطباعة فاخرة">
+  <meta property="og:description" content="منتجات مطبوعة بتصاميم مختارة أو بلمستك الخاصة.">
+  <meta property="og:image" content="https://atharlmssa.com/athar-header.jpg">
+  <meta property="og:locale" content="ar_SA">
+  <title>أثر ولمسة | هدايا وطباعة فاخرة</title>
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20260913-1">
+  <script src="products.js?v=20260913-1" defer></script>
+  <script src="app.js?v=20260913-1" defer></script>
 </head>
 <body>
-<div class="athar-banner"><img src="athar-header.jpg" alt="أثر ولمسة - كل منتج يحمل أثراً ويترك لمسة"></div>
-<iframe id="storeFrame" class="store" src="index-single-file.html?v=20260913-10" title="متجر أثر ولمسة"></iframe>
-<script>
-const frame=document.getElementById('storeFrame');
-const WA='966551902949';
-const products={
- shirts:[
-  {name:'مستمر',cat:'عبارات تحفيزية',price:'89 ر.س',img:'shirts/shirt-1.jpg'},
-  {name:'نسخة أفضل',cat:'عبارات تحفيزية',price:'89 ر.س',img:'shirts/shirt-2.jpg'},
-  {name:'روح السعودية',cat:'تصاميم سعودية',price:'89 ر.س',img:'shirts/shirt-3.jpg'},
-  {name:'قوة وإنجاز',cat:'عبارات تحفيزية',price:'89 ر.س',img:'shirts/shirt-4.jpg'},
-  {name:'الطريق يستحق',cat:'عبارات تحفيزية',price:'89 ر.س',img:'shirts/shirt-5.jpg'}
- ],
- mugs:[
-  {name:'كل يوم فرصة',cat:'أكواب تحفيزية',price:'السعر عند الطلب',img:'mugs/mug-1.jpg'},
-  {name:'عقل أهدأ',cat:'أكواب تحفيزية',price:'السعر عند الطلب',img:'mugs/mug-2.jpg'}
- ],
- cases:[
-  {name:'خطوة أقرب',cat:'كفرات جوال',price:'السعر عند الطلب',img:'other-products/case-1.jpg'},
-  {name:'سعودي وأفتخر',cat:'كفرات جوال',price:'السعر عند الطلب',img:'other-products/case-2.jpg'},
-  {name:'الأشياء الجيدة',cat:'كفرات جوال',price:'السعر عند الطلب',img:'other-products/case-3.jpg'}
- ]
-};
-function esc(s){return String(s).replace(/[&<>\"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[m]))}
-function waLink(name){return `https://wa.me/${WA}?text=${encodeURIComponent('مرحباً أثر ولمسة، أرغب في طلب تصميم: '+name)}`}
-function card(p){return `<article class="product-card athar-real-card"><div class="athar-real-img"><img src="${p.img}" alt="${esc(p.name)}"></div><h3>${esc(p.name)}</h3><p>${esc(p.cat)} • تصميم معتمد</p><div class="price">${esc(p.price)}</div><a class="athar-order" href="${waLink(p.name)}" target="_blank" rel="noopener">اطلب عبر واتساب 💬</a></article>`}
-function inject(doc){
- if(doc.getElementById('athar-real-products'))return;
- const marker=doc.createElement('i');marker.id='athar-real-products';marker.hidden=true;doc.body.appendChild(marker);
- const sg=doc.querySelector('#products .grid')||doc.querySelector('#products');
- const mg=doc.querySelector('#mugs .grid')||doc.querySelector('#mugs');
- const og=doc.querySelector('#other-products .grid')||doc.querySelector('#other-products');
- if(sg)sg.insertAdjacentHTML('afterbegin',products.shirts.map(card).join(''));
- if(mg)mg.insertAdjacentHTML('afterbegin',products.mugs.map(card).join(''));
- if(og)og.insertAdjacentHTML('afterbegin',products.cases.map(card).join(''));
-}
-function apply(){
- try{
-  const doc=frame.contentDocument||frame.contentWindow.document;if(!doc||!doc.head||!doc.body)return;
-  let st=doc.getElementById('athar-real-style');if(!st){st=doc.createElement('style');st.id='athar-real-style';doc.head.appendChild(st)}
-  st.textContent=`
-  .athar-real-card{background:#fff!important;border:1px solid #e8dfd2!important;border-radius:18px!important;box-shadow:0 12px 32px rgba(0,0,0,.08)!important;overflow:hidden!important}
-  .athar-real-img{height:330px!important;background:#f3f0e8!important;padding:0!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important}
-  .athar-real-img img{display:block!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;transform:none!important;filter:none!important;margin:0!important}
-  .athar-real-card:hover .athar-real-img img{transform:scale(1.025)!important}
-  .athar-real-card h3{font-weight:900!important;margin-top:14px!important}.athar-real-card p{color:#8f846f!important}.athar-real-card .price{font-weight:900!important;color:#8b6811!important}
-  .athar-order{display:block!important;width:100%!important;background:#151311!important;color:#fff!important;text-align:center!important;padding:13px 10px!important;border-radius:8px!important;font-weight:900!important;text-decoration:none!important;margin-top:10px!important}.athar-order:hover{background:#d6a91e!important;color:#111!important}
-  .athar-contact-strip{position:sticky!important;top:0!important;z-index:9999!important;background:#0d0c0b!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;flex-wrap:wrap!important;padding:10px 14px!important;border-bottom:1px solid #3d321d!important}.athar-contact-strip a{color:#fff!important;text-decoration:none!important;font-weight:800!important}.athar-contact-strip a:hover{color:#d6a91e!important}
-  .athar-contact-floating{position:fixed!important;right:18px!important;bottom:18px!important;z-index:99999!important;display:flex!important;flex-direction:column!important;gap:10px!important}.athar-contact-floating a{display:flex!important;align-items:center!important;justify-content:center!important;padding:12px 16px!important;border-radius:28px!important;text-decoration:none!important;font-weight:900!important;box-shadow:0 8px 24px rgba(0,0,0,.22)!important}.athar-wa{background:#25D366!important;color:#fff!important}.athar-mail{background:#d6a91e!important;color:#111!important}
-  @media(max-width:700px){.athar-real-img{height:270px!important}.athar-contact-strip{gap:10px!important;font-size:11px!important}.athar-contact-floating{right:10px!important;bottom:10px!important}.athar-contact-floating a{padding:10px 12px!important;font-size:12px!important}}
-  `;
-  inject(doc);
-  let strip=doc.querySelector('.athar-contact-strip');if(!strip){strip=doc.createElement('div');strip.className='athar-contact-strip';strip.innerHTML='<a href="https://wa.me/966551902949" target="_blank">📱 واتساب: 055 190 2949</a><a href="mailto:atharlmssa@gmail.com">✉️ atharlmssa@gmail.com</a>';doc.body.insertBefore(strip,doc.body.firstChild)}
-  let fl=doc.querySelector('.athar-contact-floating');if(!fl){fl=doc.createElement('div');fl.className='athar-contact-floating';fl.innerHTML='<a class="athar-wa" href="https://wa.me/966551902949" target="_blank">💬 واتساب</a><a class="athar-mail" href="mailto:atharlmssa@gmail.com">✉️ البريد الإلكتروني</a>';doc.body.appendChild(fl)}
- }catch(e){console.warn(e)}
-}
-frame.addEventListener('load',()=>{apply();setTimeout(apply,350);setTimeout(apply,1000)});
-</script>
+  <a class="skip-link" href="#catalog">انتقل إلى المنتجات</a>
+  <div class="announcement"><span>هدايا وطباعة فاخرة تُنفذ لك</span><a href="https://wa.me/966551902949" target="_blank" rel="noopener">تواصل عبر واتساب</a></div>
+  <header class="site-header" id="home">
+    <nav class="nav shell" aria-label="التنقل الرئيسي">
+      <a class="brand" href="#home" aria-label="أثر ولمسة - الرئيسية"><img src="logo.svg" alt="" width="48" height="48"><span><b>أثر ولمسة</b><small>Athar &amp; Lamsa</small></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="فتح القائمة">☰</button>
+      <div class="nav-links" id="nav-links"><a href="#catalog">المنتجات</a><a href="#custom">صمّم منتجك</a><a href="#how">طريقة الطلب</a><a href="#contact">التواصل</a></div>
+      <button class="cart-button" type="button" data-open-cart>سلة الطلب <span class="cart-count" aria-live="polite">٠</span></button>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="shell hero-layout">
+        <div class="hero-copy">
+          <p class="kicker">طباعة راقية • تصميم خاص • هدايا فاخرة</p>
+          <h1>فكرتك تترك <em>أثرًا</em><br>ولمستنا تُكملها</h1>
+          <p class="hero-text">اختر من تصاميمنا الجاهزة أو أرسل فكرتك، ونجهّز لك منتجًا يعكس ذوقك بهوية أنيقة وجودة نهتم بتفاصيلها.</p>
+          <div class="hero-actions"><a class="button button-gold" href="#catalog">تصفّح المنتجات</a><a class="button button-outline" href="https://wa.me/966551902949?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A3%D8%AB%D8%B1%20%D9%88%D9%84%D9%85%D8%B3%D8%A9%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20%D9%85%D9%86%D8%AA%D8%AC%20%D8%AE%D8%A7%D8%B5" target="_blank" rel="noopener">أرسل فكرتك</a></div>
+          <ul class="trust-list"><li>تنفيذ حسب الطلب</li><li>خيارات متنوعة</li><li>تواصل مباشر</li></ul>
+        </div>
+        <div class="hero-gallery" aria-label="نماذج من المنتجات">
+          <figure class="hero-card hero-main"><img src="shirts/shirt-23.jpg" alt="تيشيرت أفضل من الأمس" width="520" height="520"></figure>
+          <figure class="hero-card hero-top"><img src="mugs/mug-4.jpg" alt="كوب بتصميم الأسد" width="180" height="180"></figure>
+          <figure class="hero-card hero-bottom"><img src="other-products/case-1.jpg" alt="كفر جوال بتصميم سعودي" width="180" height="210"></figure>
+          <span class="made-note">مصمم بعناية<br><b>في جدة</b></span>
+        </div>
+      </div>
+    </section>
+    <section class="catalog shell" id="catalog">
+      <div class="section-heading"><div><p class="kicker">المجموعة</p><h2>اختر ما يعبّر عنك</h2></div><p>الأسعار المعروضة للقطعة، والتخصيص متاح بالتنسيق عبر واتساب.</p></div>
+      <div class="catalog-tools"><label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">ابحث عن منتج</span><input id="product-search" type="search" placeholder="ابحث باسم المنتج أو التصنيف"></label><div class="filters" id="filters" role="group" aria-label="تصنيفات المنتجات"></div></div>
+      <p class="results-summary" id="results-summary" aria-live="polite"></p>
+      <div class="product-grid" id="product-grid"></div>
+      <div class="empty-state" id="empty-state" hidden><h3>لم نجد منتجًا بهذا البحث</h3><p>جرّب كلمة أخرى أو اختر «الكل».</p></div>
+      <button class="show-more" id="show-more" type="button">عرض المزيد</button>
+    </section>
+    <section class="custom-section" id="custom"><div class="shell custom-layout"><div><p class="kicker">تصميمك الخاص</p><h2>من الفكرة إلى منتج يحمل اسمك</h2><p>أرسل العبارة أو الصورة وحدد المنتج واللون والكمية. نراجع فكرتك معك قبل التنفيذ.</p></div><a class="button button-gold" href="https://wa.me/966551902949?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%A3%D8%AB%D8%B1%20%D9%88%D9%84%D9%85%D8%B3%D8%A9%D8%8C%20%D9%84%D8%AF%D9%8A%20%D9%81%D9%83%D8%B1%D8%A9%20%D9%84%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20%D8%AE%D8%A7%D8%B5" target="_blank" rel="noopener">ابدأ طلبًا خاصًا</a></div></section>
+    <section class="how shell" id="how"><div class="section-heading"><div><p class="kicker">بخطوات واضحة</p><h2>كيف تطلب؟</h2></div></div><ol class="steps"><li><span>١</span><h3>اختر المنتج</h3><p>أضف المنتجات التي أعجبتك إلى سلة الطلب.</p></li><li><span>٢</span><h3>أرسل الطلب</h3><p>راجع السلة وأرسل تفاصيلها إلى واتساب بضغطة واحدة.</p></li><li><span>٣</span><h3>أكد التفاصيل</h3><p>نتواصل معك لتأكيد المقاس واللون والتخصيص والتوصيل.</p></li></ol></section>
+    <section class="contact" id="contact"><div class="shell contact-layout"><div><p class="kicker">نحن قريبون منك</p><h2>جاهز نبدأ؟</h2><p>راسلنا وسنساعدك في اختيار المنتج أو تجهيز تصميمك الخاص.</p></div><div class="contact-links"><a href="https://wa.me/966551902949" target="_blank" rel="noopener"><span>واتساب</span><b dir="ltr">055 190 2949</b></a><a href="mailto:atharlmssa@gmail.com"><span>البريد الإلكتروني</span><b dir="ltr">atharlmssa@gmail.com</b></a></div></div></section>
+  </main>
+  <footer><div class="shell footer-layout"><div class="brand footer-brand"><img src="logo.svg" alt="" width="42" height="42"><span><b>أثر ولمسة</b><small>Athar &amp; Lamsa</small></span></div><p>هدايا وطباعة فاخرة تُنفذ لك.</p><p>© <span id="year"></span> أثر ولمسة</p></div></footer>
+  <a class="whatsapp-float" href="https://wa.me/966551902949" target="_blank" rel="noopener">واتساب</a>
+  <div class="drawer-backdrop" data-close-cart hidden></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-hidden="true" aria-labelledby="cart-title">
+    <div class="drawer-head"><div><p class="kicker">طلباتك</p><h2 id="cart-title">سلة الطلب</h2></div><button type="button" data-close-cart aria-label="إغلاق السلة">×</button></div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-empty" id="cart-empty"><p>السلة فارغة حاليًا.</p><a href="#catalog" data-close-cart>تصفّح المنتجات</a></div>
+    <div class="cart-footer" id="cart-footer" hidden><div class="cart-total"><span>الإجمالي المبدئي</span><b id="cart-total">٠ ر.س</b></div><p>يُؤكد السعر النهائي بعد تحديد المقاس واللون والتخصيص والتوصيل.</p><button class="button button-whatsapp" id="send-order" type="button">إرسال الطلب عبر واتساب</button><button class="clear-cart" id="clear-cart" type="button">تفريغ السلة</button></div>
+  </aside>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
