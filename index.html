@@ -14,9 +14,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260918-2">
+  <link rel="stylesheet" href="styles.css?v=20260918-3">
   <script src="products.js?v=20260913-1" defer></script>
-  <script src="app.js?v=20260913-1" defer></script>
+  <script src="app.js?v=20260918-1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#catalog">انتقل إلى المنتجات</a>
@@ -109,6 +109,20 @@
     <div class="cart-empty" id="cart-empty"><p>السلة فارغة حاليًا.</p><a href="#catalog" data-close-cart>تصفّح المنتجات</a></div>
     <div class="cart-footer" id="cart-footer" hidden><div class="cart-total"><span>الإجمالي المبدئي</span><b id="cart-total">٠ ر.س</b></div><p>يُؤكد السعر النهائي بعد تحديد المقاس واللون والتخصيص والتوصيل.</p><button class="button button-whatsapp" id="send-order" type="button">إرسال الطلب عبر واتساب</button><button class="clear-cart" id="clear-cart" type="button">تفريغ السلة</button></div>
   </aside>
+  <div class="options-backdrop" data-close-options hidden></div>
+  <section class="product-options-modal" id="product-options-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="option-title" hidden>
+    <button class="options-close" type="button" data-close-options aria-label="إغلاق">×</button>
+    <div class="options-product">
+      <img id="option-product-image" src="" alt="" width="110" height="110">
+      <div><p class="kicker">خصص طلبك</p><h2 id="option-title">اختر المقاس واللون</h2><p id="option-product-name"></p></div>
+    </div>
+    <form id="product-options-form">
+      <label class="option-field"><span>المقاس أو الموديل</span><select id="option-size" required></select></label>
+      <label class="option-field"><span>اللون</span><select id="option-color" required></select></label>
+      <p class="options-help">يُؤكد توفر المقاس واللون عند مراجعة الطلب عبر واتساب.</p>
+      <button class="button button-gold options-submit" type="submit">إضافة للسلة</button>
+    </form>
+  </section>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
