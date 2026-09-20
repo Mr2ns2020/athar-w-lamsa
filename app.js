@@ -36,6 +36,9 @@ function esc(value){
 }
 
 function optionValues(product){
+  if(product.sizes||product.colors){
+    return {sizes:product.sizes||["مقاس قياسي"],colors:product.colors||["حسب الصورة"]};
+  }
   if(product.type==="تيشيرتات"){
     return {sizes:["S","M","L","XL","2XL","3XL"],colors:["أسود","أبيض","بيج","رمادي","كحلي"]};
   }
@@ -100,7 +103,9 @@ function matches(){
 }
 
 function card(product){
-  return `<article class="product-card"><div class="product-image"><img src="${esc(product.image)}" alt="${esc(product.name)}" width="480" height="480" loading="lazy" decoding="async"></div><div class="product-info"><div class="product-meta"><span>${esc(product.type)}</span><span>${esc(product.category)}</span></div><h3>${esc(product.name)}</h3><div class="product-buy"><span class="price">${fmt.format(product.price)} ر.س</span><button class="add-button" type="button" data-add="${product.id}">اختر المقاس واللون</button></div></div></article>`;
+  const stickerClass=product.type==="استيكرات"?" sticker-image":"";
+  const buttonLabel=product.type==="استيكرات"?"اختر المقاس":"اختر المقاس واللون";
+  return `<article class="product-card"><div class="product-image${stickerClass}"><img src="${esc(product.image)}" alt="${esc(product.name)}" width="480" height="480" loading="lazy" decoding="async"></div><div class="product-info"><div class="product-meta"><span>${esc(product.type)}</span><span>${esc(product.category)}</span></div><h3>${esc(product.name)}</h3><div class="product-buy"><span class="price">${fmt.format(product.price)} ر.س</span><button class="add-button" type="button" data-add="${product.id}">${buttonLabel}</button></div></div></article>`;
 }
 
 function renderProducts(){
