@@ -13,7 +13,12 @@ const backdrop=document.querySelector(".drawer-backdrop");
 const cartItems=document.querySelector("#cart-items");
 const cartEmpty=document.querySelector("#cart-empty");
 const cartFooter=document.querySelector("#cart-footer");
+const subtotalNode=document.querySelector("#cart-subtotal");
 const totalNode=document.querySelector("#cart-total");
+const discountRow=document.querySelector("#cart-discount-row");
+const discountNode=document.querySelector("#cart-discount");
+const couponInput=document.querySelector("#coupon-code");
+const couponStatus=document.querySelector("#coupon-status");
 const toast=document.querySelector("#toast");
 const optionsModal=document.querySelector("#product-options-modal");
 const optionsBackdrop=document.querySelector(".options-backdrop");
@@ -25,11 +30,19 @@ const colorSelect=document.querySelector("#option-color");
 const fmt=new Intl.NumberFormat("ar-SA");
 const PAGE=12;
 const WA="966551902949";
+const DISCOUNT_CODE="WATAN96";
+const DISCOUNT_RATE=.20;
 
 let type="الكل";
 let limit=PAGE;
 let pendingProduct=null;
 let cart=readCart();
+let discountApplied=localStorage.getItem("atharDiscount")==DISCOUNT_CODE;
+
+function totals(subtotal){
+  const discount=discountApplied?Math.round(subtotal*DISCOUNT_RATE):0;
+  return {subtotal,discount,total:subtotal-discount};
+}
 
 function esc(value){
   return String(value).replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
@@ -187,12 +200,35 @@ function rows(){
 function renderCart(){
   const data=rows();
   const count=data.reduce((sum,row)=>sum+row.quantity,0);
-  const total=data.reduce((sum,row)=>sum+row.product.price*row.quantity,0);
+  const pricing=totals(data.reduce((sum,row)=>sum+row.product.price*row.quantity,0));
   document.querySelectorAll(".cart-count").forEach(node=>node.textContent=fmt.format(count));
   cartItems.innerHTML=data.map(({key,product,size,color,quantity})=>`<article class="cart-item"><img src="${esc(product.image)}" alt="" width="70" height="70"><div><h3>${esc(product.name)}</h3><p class="cart-variant">المقاس: ${esc(size)} · اللون: ${esc(color)}</p><p>${fmt.format(product.price)} ر.س</p><div class="qty"><button type="button" data-qty="-1" data-key="${esc(key)}" aria-label="تقليل الكمية">−</button><b>${fmt.format(quantity)}</b><button type="button" data-qty="1" data-key="${esc(key)}" aria-label="زيادة الكمية">+</button></div></div><button class="remove-item" type="button" data-remove="${esc(key)}" aria-label="حذف المنتج">×</button></article>`).join("");
   cartEmpty.hidden=data.length>0;
   cartFooter.hidden=data.length===0;
-  totalNode.textContent=`${fmt.format(total)} ر.س`;
+  subtotalNode.textContent=`${fmt.format(pricing.subtotal)} ر.س`;
+  discountRow.hidden=!discountApplied;
+  discountNode.textContent=`− ${fmt.format(pricing.discount)} ر.س`;
+  totalNode.textContent=`${fmt.format(pricing.total)} ر.س`;
+  couponInput.value=discountApplied?DISCOUNT_CODE:"";
+  couponStatus.textContent=discountApplied?"تم تطبيق خصم اليوم الوطني بنجاح.":"";
+  couponStatus.classList.toggle("success",discountApplied);
+}
+
+function applyCoupon(){
+  const code=couponInput.value.trim().toUpperCase();
+  discountApplied=code===DISCOUNT_CODE;
+  if(discountApplied){
+    localStorage.setItem("atharDiscount",DISCOUNT_CODE);
+    announce("تم تطبيق خصم ٢٠٪");
+  }else{
+    localStorage.removeItem("atharDiscount");
+  }
+  renderCart();
+  if(!discountApplied){
+    couponInput.value=code;
+    couponStatus.textContent="الكود غير صحيح. استخدم WATAN96";
+    couponStatus.classList.remove("success");
+  }
 }
 
 function openCart(){
@@ -219,9 +255,10 @@ function changeQuantity(key,delta){
 function send(){
   const data=rows();
   if(!data.length)return;
-  const total=data.reduce((sum,row)=>sum+row.product.price*row.quantity,0);
+  const pricing=totals(data.reduce((sum,row)=>sum+row.product.price*row.quantity,0));
   const lines=data.map((row,index)=>`${index+1}) ${row.product.name} — المقاس: ${row.size} — اللون: ${row.color} — الكمية: ${row.quantity} — ${row.product.price*row.quantity} ر.س`);
-  const message=["مرحبًا أثر ولمسة، أرغب في طلب المنتجات التالية:","",...lines,"",`الإجمالي المبدئي: ${total} ر.س`,"","أرغب في تأكيد التوفر والتوصيل."].join("\n");
+  const discountLines=discountApplied?[`كود الخصم: ${DISCOUNT_CODE}`,`الخصم 20%: -${pricing.discount} ر.س`,`الإجمالي بعد الخصم: ${pricing.total} ر.س`]:[`الإجمالي المبدئي: ${pricing.total} ر.س`];
+  const message=["مرحبًا أثر ولمسة، أرغب في طلب المنتجات التالية:","",...lines,"",...discountLines,"","أرغب في تأكيد التوفر والتوصيل."].join("\n");
   window.open(`https://wa.me/${WA}?text=${encodeURIComponent(message)}`,"_blank","noopener");
 }
 
@@ -253,6 +290,11 @@ cartItems.addEventListener("click",event=>{
 document.querySelectorAll("[data-open-cart]").forEach(node=>node.addEventListener("click",openCart));
 document.querySelectorAll("[data-close-cart]").forEach(node=>node.addEventListener("click",closeCart));
 document.querySelector("#send-order").addEventListener("click",send);
+document.querySelector("#apply-coupon").addEventListener("click",applyCoupon);
+couponInput.addEventListener("keydown",event=>{if(event.key==="Enter")applyCoupon()});
+document.querySelector("#copy-coupon").addEventListener("click",async event=>{
+  try{await navigator.clipboard.writeText(DISCOUNT_CODE);event.currentTarget.textContent="تم النسخ";announce("تم نسخ كود الخصم")}catch{announce(`كود الخصم: ${DISCOUNT_CODE}`)}
+});
 document.querySelector("#clear-cart").addEventListener("click",()=>{cart={};saveCart()});
 document.addEventListener("keydown",event=>{
   if(event.key!=="Escape")return;

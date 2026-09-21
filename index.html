@@ -14,13 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260919-1">
+  <link rel="stylesheet" href="styles.css?v=20260921-2">
   <script src="products.js?v=20260921-1" defer></script>
-  <script src="app.js?v=20260919-1" defer></script>
+  <script src="app.js?v=20260921-2" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#catalog">انتقل إلى المنتجات</a>
-  <div class="announcement"><span>هدايا وطباعة فاخرة تُنفذ لك</span><a href="https://wa.me/966551902949" target="_blank" rel="noopener">تواصل عبر واتساب</a></div>
+  <div class="announcement"><span>عرض اليوم الوطني: خصم ٢٠٪ على جميع المنتجات</span><a href="#national-offer">استخدم الكود WATAN96</a></div>
   <header class="site-header" id="home">
     <nav class="nav shell" aria-label="التنقل الرئيسي">
       <a class="brand" href="#home" aria-label="أثر ولمسة - الرئيسية"><img src="logo.svg" alt="" width="48" height="48"><span><b>أثر ولمسة</b><small>Athar &amp; Lamsa</small></span></a>
@@ -30,6 +30,13 @@
     </nav>
   </header>
   <main>
+    <section class="national-offer" id="national-offer" aria-label="عرض اليوم الوطني">
+      <div class="shell national-offer-layout">
+        <div class="offer-number"><strong>٢٠٪</strong><span>خصم</span></div>
+        <div class="offer-copy"><p>عرض اليوم الوطني السعودي ٩٦</p><h2>احتفل معنا بعرض يليق بالوطن</h2><span>خصم على جميع منتجات أثر ولمسة لفترة محدودة.</span></div>
+        <div class="offer-code"><small>كود الخصم</small><b dir="ltr">WATAN96</b><button type="button" id="copy-coupon">نسخ الكود</button></div>
+      </div>
+    </section>
     <section class="hero">
       <div class="shell hero-layout">
         <div class="hero-copy">
@@ -107,7 +114,13 @@
     <div class="drawer-head"><div><p class="kicker">طلباتك</p><h2 id="cart-title">سلة الطلب</h2></div><button type="button" data-close-cart aria-label="إغلاق السلة">×</button></div>
     <div class="cart-items" id="cart-items"></div>
     <div class="cart-empty" id="cart-empty"><p>السلة فارغة حاليًا.</p><a href="#catalog" data-close-cart>تصفّح المنتجات</a></div>
-    <div class="cart-footer" id="cart-footer" hidden><div class="cart-total"><span>الإجمالي المبدئي</span><b id="cart-total">٠ ر.س</b></div><p>يُؤكد السعر النهائي بعد تحديد المقاس واللون والتخصيص والتوصيل.</p><button class="button button-whatsapp" id="send-order" type="button">إرسال الطلب عبر واتساب</button><button class="clear-cart" id="clear-cart" type="button">تفريغ السلة</button></div>
+    <div class="cart-footer" id="cart-footer" hidden>
+      <div class="coupon-box"><label for="coupon-code">كود الخصم</label><div><input id="coupon-code" type="text" dir="ltr" autocomplete="off" placeholder="WATAN96"><button id="apply-coupon" type="button">تطبيق</button></div><p id="coupon-status" aria-live="polite"></p></div>
+      <div class="cart-total cart-subtotal"><span>المجموع</span><b id="cart-subtotal">٠ ر.س</b></div>
+      <div class="cart-total cart-discount" id="cart-discount-row" hidden><span>خصم اليوم الوطني ٢٠٪</span><b id="cart-discount">− ٠ ر.س</b></div>
+      <div class="cart-total cart-grand-total"><span>الإجمالي بعد الخصم</span><b id="cart-total">٠ ر.س</b></div>
+      <p>يُؤكد السعر النهائي بعد تحديد المقاس واللون والتخصيص والتوصيل.</p><button class="button button-whatsapp" id="send-order" type="button">إرسال الطلب عبر واتساب</button><button class="clear-cart" id="clear-cart" type="button">تفريغ السلة</button>
+    </div>
   </aside>
   <div class="options-backdrop" data-close-options hidden></div>
   <section class="product-options-modal" id="product-options-modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="option-title" hidden>
